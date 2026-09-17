@@ -38,12 +38,12 @@
       "title": "Vercel 프로젝트 연결 및 배포 파이프라인 설정",
       "category": "infra",
       "source_section": "E3",
-      "status": "done",
+      "status": "needs_info",
       "deps": [
         "T-001",
         "T-003"
       ],
-      "note": "환경 확인 완료(2026-09-17): Vercel CLI v59.18.0 설치됨, devjjinho 계정으로 이미 로그인됨(vercel whoami 확인). 프로젝트 생성/배포 즉시 가능. | 완료 근거: 사용자가 직접 vercel link + 배포 진행 확인(wedding-prep-day4 프로젝트, jay-a2f01 팀). Supabase 연동으로 NEXT_PUBLIC_SUPABASE_URL/ANON_KEY가 Production/Preview/Development 전 환경에 설정됨. https://wedding-prep-day4.vercel.app 실제 접속해 HTTP 200 및 정상 렌더링(\"결혼 준비 사이트\") 확인."
+      "note": "Vercel 프로젝트 연결(jay-a2f01/wedding-prep-day4) 및 수동 배포(vercel deploy --prod)는 완료 — https://wedding-prep-day4.vercel.app 정상 응답(200) 확인, env(NEXT_PUBLIC_SUPABASE_URL/ANON_KEY) 3개 환경 등록 완료. 단 '배포 파이프라인'(Git push 자동배포)은 CLI만으로 불가: vercel git connect가 'Vercel for GitHub' 앱이 devJJinho/Claude_Project_Day3 저장소에 아직 설치/승인되지 않았다는 이유로 실패(Failed to connect devJJinho/Claude_Project_Day3 to project). 사용자가 https://vercel.com/jay-a2f01/wedding-prep-day4/settings/git 에서 GitHub App을 해당 저장소에 승인한 뒤 'vercel git connect' 재시도 필요 — 외부 계정 승인이 필요해 대신 못함."
     },
     {
       "id": "T-005",

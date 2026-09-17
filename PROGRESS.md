@@ -1,12 +1,12 @@
 # 진행 상황
 
-_이 파일은 `backlog.json`으로부터 자동 생성됩니다. 직접 편집하지 마세요. (생성: 2026-09-17T16:12:09.690Z)_
+_이 파일은 `backlog.json`으로부터 자동 생성됩니다. 직접 편집하지 마세요. (생성: 2026-09-17T16:30:05.757Z)_
 
 프로젝트: **결혼 준비 사이트**
 
 ## 요약
 
-전체 56개 작업 — 완료 37, needs_info 4, 할 일 15
+전체 56개 작업 — 완료 36, needs_info 5, 할 일 15
 
 ## 카테고리별 상세
 
@@ -17,7 +17,7 @@ _이 파일은 `backlog.json`으로부터 자동 생성됩니다. 직접 편집�
 | T-001 | 완료 | Next.js(TypeScript, App Router) 프로젝트 초기화 |
 | T-002 | 완료 | Tailwind CSS 설정 |
 | T-003 | 완료 | Supabase 프로젝트 생성 및 환경변수(.env) 연결 |
-| T-004 | 완료 | Vercel 프로젝트 연결 및 배포 파이프라인 설정 |
+| T-004 | needs_info | Vercel 프로젝트 연결 및 배포 파이프라인 설정 |
 | T-005 | 완료 | Supabase DB 스키마: users/profile 테이블 생성 |
 | T-006 | 완료 | Supabase DB 스키마: couple(커플 연결) 테이블 생성 |
 | T-007 | 완료 | Supabase DB 스키마: workspace(항목) 테이블 생성 |
