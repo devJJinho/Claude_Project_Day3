@@ -394,33 +394,35 @@
       "title": "대시보드 화면 - 워크플레이스 목록 카드(총/확정/보류 개수 표시)",
       "category": "dashboard",
       "source_section": "확인된 사실",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-026",
         "T-030"
       ],
-      "note": "UI/UX 참고: 대시보드 목업 설계 완료(https://claude.ai/artifact/BhEJiwaMtDbEpL55gFwC8A) - 대시보드 UI 10가지 모범 사례(목표 정의/적절한 시각화/일관성/논리적 흐름/여백/정보 은닉 금지/개인화/정렬 등) 적용. 스탯 카드, 카테고리 필터, 리스트/지도 토글, 상태별 색상 코드(후보/보류/탈락/확정) 참고할 것."
+      "note": "UI/UX 참고: 대시보드 목업 설계 완료(https://claude.ai/artifact/BhEJiwaMtDbEpL55gFwC8A) - 대시보드 UI 10가지 모범 사례(목표 정의/적절한 시각화/일관성/논리적 흐름/여백/정보 은닉 금지/개인화/정렬 등) 적용. 스탯 카드, 카테고리 필터, 리스트/지도 토글, 상태별 색상 코드(후보/보류/탈락/확정) 참고할 것. | 완료 근거: src/app/dashboard/DashboardView.tsx + src/app/page.tsx(홈=대시보드)에 총/확정/보류 스탯 카드 구현, verify 통과. 목업(artifact) 디자인 톤 반영."
     },
     {
       "id": "T-037",
       "title": "대시보드 - 워크플레이스 클릭 시 상세 화면 이동",
       "category": "dashboard",
       "source_section": "확인된 사실",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-036",
         "T-032"
-      ]
+      ],
+      "note": "완료 근거: 워크플레이스 카드가 /workspaces/[id]로 링크됨(이미 구현된 상세 화면), verify 통과"
     },
     {
       "id": "T-038",
       "title": "대시보드 - 리스트/지도 보기 전환 토글",
       "category": "dashboard",
       "source_section": "확인된 사실",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-036"
-      ]
+      ],
+      "note": "완료 근거: DashboardView에 리스트/지도 토글 구현(지도는 T-039 키 발급 전까지 라벨 붙은 플레이스홀더), verify 통과"
     },
     {
       "id": "T-039",
