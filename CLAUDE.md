@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 애플리케이션 본체(결혼 준비 사이트 자체)는 아직 구현 전이다. 지금 저장소에 있는 코드는 backlog 관리용 도구(CLI, hooks, 대시보드)뿐이다 — Day_1_문제정의 프로젝트에서 만든 것을 그대로 재사용했다.
 
-- **기술 스택**: 미확정. 개발요청서.md E2에서 "특정 프레임워크/클라우드 지정 없음 — 개발자(본인) 재량"으로 확정됨. 실제 구현 착수 시 스택을 정하고 이 문서와 `.claude/tools/quality-config.mjs`의 `SOURCE_DIRS`를 갱신할 것.
+- **기술 스택**: Next.js(TypeScript, App Router) + Tailwind CSS + Supabase(Postgres/Auth/Realtime/Storage) + 네이버지도 API + Vercel 배포. 개발요청서.md E2("특정 프레임워크/클라우드 지정 없음 — 개발자 재량")에 따라 backlog(T-001~T-050) 작성 시점에 확정. 실제 소스 코드가 생기면 `.claude/tools/quality-config.mjs`의 `SOURCE_DIRS`에 해당 디렉터리를 추가할 것(아직 코드가 없어 비어 있음).
 - 코드 품질 명령: `npm run verify` (길이/lint/build — 세부 규칙은 `.claude/rules/code-structure.md`).
 - backlog 조회/변경: `node .claude/tools/backlog-cli.mjs help` — 세부 사용법은 `.claude/skills/backlog/SKILL.md`, 변경 주체·상태 규칙은 `.claude/rules/`.
 - 대시보드: `dashboard/index.html` (읽기 전용 뷰어, 파일 선택으로 backlog.json 확인).

@@ -2,5 +2,526 @@
   "schema_version": 1,
   "project": "결혼 준비 사이트",
   "source": "개발요청서.md",
-  "tasks": []
+  "tasks": [
+    {
+      "id": "T-001",
+      "title": "Next.js(TypeScript, App Router) 프로젝트 초기화",
+      "category": "infra",
+      "source_section": "E2",
+      "status": "todo"
+    },
+    {
+      "id": "T-002",
+      "title": "Tailwind CSS 설정",
+      "category": "infra",
+      "source_section": "E2",
+      "status": "todo",
+      "deps": [
+        "T-001"
+      ]
+    },
+    {
+      "id": "T-003",
+      "title": "Supabase 프로젝트 생성 및 환경변수(.env) 연결",
+      "category": "infra",
+      "source_section": "E2,E3",
+      "status": "todo",
+      "deps": [
+        "T-001"
+      ],
+      "note": "환경 확인 완료(2026-09-17): Supabase CLI 영구 설치는 안 돼 있음(brew가 Xcode 라이선스 미동의로 막혀 있어 brew install 불가 - 사용자가 'sudo xcodebuild -license accept' 실행 필요). 'npx supabase' 방식은 정상 동작 확인. 단, supabase login은 브라우저 인증이 필요해 사용자가 직접 실행해야 함(node.js 스크립트로 대신 못함) - 로그인 후 프로젝트 생성으로 진행."
+    },
+    {
+      "id": "T-004",
+      "title": "Vercel 프로젝트 연결 및 배포 파이프라인 설정",
+      "category": "infra",
+      "source_section": "E3",
+      "status": "todo",
+      "deps": [
+        "T-001"
+      ],
+      "note": "환경 확인 완료(2026-09-17): Vercel CLI v59.18.0 설치됨, devjjinho 계정으로 이미 로그인됨(vercel whoami 확인). 프로젝트 생성/배포 즉시 가능."
+    },
+    {
+      "id": "T-005",
+      "title": "Supabase DB 스키마: users/profile 테이블 생성",
+      "category": "infra",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ]
+    },
+    {
+      "id": "T-006",
+      "title": "Supabase DB 스키마: couple(커플 연결) 테이블 생성",
+      "category": "infra",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ]
+    },
+    {
+      "id": "T-007",
+      "title": "Supabase DB 스키마: workspace(항목) 테이블 생성",
+      "category": "infra",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ]
+    },
+    {
+      "id": "T-008",
+      "title": "Supabase DB 스키마: candidate(후보) 테이블 생성(링크/위치/코멘트/가격/사진/예약/평점/상태)",
+      "category": "infra",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-007"
+      ]
+    },
+    {
+      "id": "T-009",
+      "title": "Supabase DB 스키마: checklist 테이블 생성",
+      "category": "infra",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-006"
+      ]
+    },
+    {
+      "id": "T-010",
+      "title": "Supabase DB 스키마: budget 테이블 생성",
+      "category": "infra",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-006"
+      ]
+    },
+    {
+      "id": "T-011",
+      "title": "Supabase DB 스키마: wedding_date(D-day) 필드 추가",
+      "category": "infra",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-006"
+      ]
+    },
+    {
+      "id": "T-012",
+      "title": "Supabase RLS 정책: 초대·승인된 참여자만 접근 가능하도록 설정",
+      "category": "infra",
+      "source_section": "F",
+      "status": "todo",
+      "deps": [
+        "T-006",
+        "T-007",
+        "T-008",
+        "T-009",
+        "T-010"
+      ]
+    },
+    {
+      "id": "T-013",
+      "title": "Supabase Auth 구글 소셜로그인 연동",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ]
+    },
+    {
+      "id": "T-014",
+      "title": "Supabase Auth 카카오 소셜로그인 연동",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ]
+    },
+    {
+      "id": "T-015",
+      "title": "Supabase Auth 네이버 소셜로그인 연동",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-003"
+      ],
+      "note": "Supabase 기본 제공 OAuth provider 목록에 네이버가 없을 수 있음 - 커스텀 OAuth 플로우 필요 여부 조사 선행"
+    },
+    {
+      "id": "T-016",
+      "title": "로그인/로그아웃 UI(소셜 버튼 3종)",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-013",
+        "T-014",
+        "T-015"
+      ]
+    },
+    {
+      "id": "T-017",
+      "title": "회원가입 시 profile 레코드 자동 생성 처리",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-005",
+        "T-016"
+      ]
+    },
+    {
+      "id": "T-018",
+      "title": "커플 연결 - 초대 코드 생성 API",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-006",
+        "T-017"
+      ]
+    },
+    {
+      "id": "T-019",
+      "title": "커플 연결 - 초대 코드 입력/수락 UI+API",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-018"
+      ]
+    },
+    {
+      "id": "T-020",
+      "title": "추가 참여자 초대 - 소셜 계정 지정 초대 발송 API",
+      "category": "auth",
+      "source_section": "A,D",
+      "status": "todo",
+      "deps": [
+        "T-006",
+        "T-017"
+      ]
+    },
+    {
+      "id": "T-021",
+      "title": "추가 참여자 초대 - 승인/거절 API",
+      "category": "auth",
+      "source_section": "A,D",
+      "status": "todo",
+      "deps": [
+        "T-020"
+      ]
+    },
+    {
+      "id": "T-022",
+      "title": "초대 대기 알림 UI(배지)",
+      "category": "auth",
+      "source_section": "A,D",
+      "status": "todo",
+      "deps": [
+        "T-021"
+      ]
+    },
+    {
+      "id": "T-023",
+      "title": "참여자 탈퇴 처리(본인 계정만 삭제, 등록 데이터는 유지) API",
+      "category": "auth",
+      "source_section": "A",
+      "status": "todo",
+      "deps": [
+        "T-006",
+        "T-017"
+      ]
+    },
+    {
+      "id": "T-024",
+      "title": "추천 카테고리 상수 정의(결혼식장/스튜디오/메이크업/드레스/신혼여행 등)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-001"
+      ]
+    },
+    {
+      "id": "T-025",
+      "title": "워크플레이스 생성 API(제목/카테고리, 추천+직접입력)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-007",
+        "T-024"
+      ]
+    },
+    {
+      "id": "T-026",
+      "title": "워크플레이스 생성 UI(모달/폼)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-025"
+      ]
+    },
+    {
+      "id": "T-027",
+      "title": "후보 등록 API(링크/위치/코멘트, 전부 선택 입력)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-008"
+      ]
+    },
+    {
+      "id": "T-028",
+      "title": "후보 등록 API 필드 확장(가격/사진/예약상태·날짜/평점)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-027"
+      ]
+    },
+    {
+      "id": "T-029",
+      "title": "후보 등록 UI 폼",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-028"
+      ]
+    },
+    {
+      "id": "T-030",
+      "title": "후보 상태 변경 API(후보/보류/탈락/확정, 항목당 확정 다중 허용)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-027"
+      ]
+    },
+    {
+      "id": "T-031",
+      "title": "후보 상태 변경 UI(상태 배지/드롭다운)",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-030"
+      ]
+    },
+    {
+      "id": "T-032",
+      "title": "워크플레이스 상세 화면 - 후보 리스트 뷰",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-029",
+        "T-031"
+      ]
+    },
+    {
+      "id": "T-033",
+      "title": "후보 사진 업로드 - Supabase Storage 연동",
+      "category": "workspace",
+      "source_section": "B",
+      "status": "todo",
+      "deps": [
+        "T-028"
+      ]
+    },
+    {
+      "id": "T-034",
+      "title": "새 후보/코멘트 등록 시 앱 내 배지 알림 구현",
+      "category": "workspace",
+      "source_section": "D",
+      "status": "todo",
+      "deps": [
+        "T-032"
+      ]
+    },
+    {
+      "id": "T-035",
+      "title": "Supabase Realtime 구독 - 후보 추가/수정 시 실시간 반영",
+      "category": "workspace",
+      "source_section": "D",
+      "status": "todo",
+      "deps": [
+        "T-032"
+      ]
+    },
+    {
+      "id": "T-036",
+      "title": "대시보드 화면 - 워크플레이스 목록 카드(총/확정/보류 개수 표시)",
+      "category": "dashboard",
+      "source_section": "확인된 사실",
+      "status": "todo",
+      "deps": [
+        "T-026",
+        "T-030"
+      ],
+      "note": "UI/UX 참고: 대시보드 목업 설계 완료(https://claude.ai/artifact/BhEJiwaMtDbEpL55gFwC8A) - 대시보드 UI 10가지 모범 사례(목표 정의/적절한 시각화/일관성/논리적 흐름/여백/정보 은닉 금지/개인화/정렬 등) 적용. 스탯 카드, 카테고리 필터, 리스트/지도 토글, 상태별 색상 코드(후보/보류/탈락/확정) 참고할 것."
+    },
+    {
+      "id": "T-037",
+      "title": "대시보드 - 워크플레이스 클릭 시 상세 화면 이동",
+      "category": "dashboard",
+      "source_section": "확인된 사실",
+      "status": "todo",
+      "deps": [
+        "T-036",
+        "T-032"
+      ]
+    },
+    {
+      "id": "T-038",
+      "title": "대시보드 - 리스트/지도 보기 전환 토글",
+      "category": "dashboard",
+      "source_section": "확인된 사실",
+      "status": "todo",
+      "deps": [
+        "T-036"
+      ]
+    },
+    {
+      "id": "T-039",
+      "title": "네이버지도 API 키 발급 및 프로젝트 연동",
+      "category": "map",
+      "source_section": "C",
+      "status": "todo",
+      "deps": [
+        "T-001"
+      ]
+    },
+    {
+      "id": "T-040",
+      "title": "후보 위치를 지도에 마커로 표시하는 컴포넌트",
+      "category": "map",
+      "source_section": "C",
+      "status": "todo",
+      "deps": [
+        "T-039",
+        "T-027"
+      ]
+    },
+    {
+      "id": "T-041",
+      "title": "여러 워크플레이스 후보 위치 겹쳐보기 UI(워크플레이스 선택 토글)",
+      "category": "map",
+      "source_section": "C",
+      "status": "todo",
+      "deps": [
+        "T-040"
+      ]
+    },
+    {
+      "id": "T-042",
+      "title": "대시보드 지도 뷰 - 확정 후보 전체 위치 보기",
+      "category": "map",
+      "source_section": "C",
+      "status": "todo",
+      "deps": [
+        "T-041",
+        "T-036"
+      ]
+    },
+    {
+      "id": "T-043",
+      "title": "체크리스트 항목 추가/완료 토글 API",
+      "category": "checklist",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-009"
+      ]
+    },
+    {
+      "id": "T-044",
+      "title": "체크리스트 UI 구현",
+      "category": "checklist",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-043"
+      ]
+    },
+    {
+      "id": "T-045",
+      "title": "결혼식 날짜 설정 UI/API",
+      "category": "dday",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-011"
+      ]
+    },
+    {
+      "id": "T-046",
+      "title": "D-day 카운트다운 표시 컴포넌트",
+      "category": "dday",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-045"
+      ]
+    },
+    {
+      "id": "T-047",
+      "title": "예산 항목 추가/수정 API(카테고리별 예산/지출)",
+      "category": "budget",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-010"
+      ]
+    },
+    {
+      "id": "T-048",
+      "title": "예산 UI(합계 및 카테고리별 표시)",
+      "category": "budget",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-047"
+      ]
+    },
+    {
+      "id": "T-049",
+      "title": "Supabase RLS 정책 최종 점검 및 테스트(비공개 접근 검증)",
+      "category": "infra",
+      "source_section": "F",
+      "status": "todo",
+      "deps": [
+        "T-012",
+        "T-018",
+        "T-020"
+      ]
+    },
+    {
+      "id": "T-050",
+      "title": "배포 - 프로덕션 환경변수 점검 및 최종 배포",
+      "category": "infra",
+      "source_section": "E3",
+      "status": "todo",
+      "deps": [
+        "T-004",
+        "T-049"
+      ]
+    }
+  ]
 }
