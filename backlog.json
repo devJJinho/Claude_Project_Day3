@@ -271,112 +271,123 @@
       "title": "워크플레이스 생성 API(제목/카테고리, 추천+직접입력)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-007",
         "T-024"
-      ]
+      ],
+      "note": "완료 근거: createWorkspace 서버 액션 구현(src/app/workspaces/actions.ts), workspaces 테이블 insert, npm run verify 통과"
     },
     {
       "id": "T-026",
       "title": "워크플레이스 생성 UI(모달/폼)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-025"
-      ]
+      ],
+      "note": "완료 근거: src/app/workspaces/page.tsx에 목록+생성 폼 구현(추천 카테고리 datalist 포함), verify 통과"
     },
     {
       "id": "T-027",
       "title": "후보 등록 API(링크/위치/코멘트, 전부 선택 입력)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-008"
-      ]
+      ],
+      "note": "완료 근거: addCandidate 서버 액션 구현(링크/위치/코멘트 등 전부 선택 입력), verify 통과"
     },
     {
       "id": "T-028",
       "title": "후보 등록 API 필드 확장(가격/사진/예약상태·날짜/평점)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-027"
-      ]
+      ],
+      "note": "완료 근거: addCandidate에 가격대/예약상태/예약일/평점 필드까지 확장 완료(같은 액션에 통합), verify 통과"
     },
     {
       "id": "T-029",
       "title": "후보 등록 UI 폼",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-028"
-      ]
+      ],
+      "note": "완료 근거: src/app/workspaces/[id]/page.tsx에 후보 등록 폼 구현(전 필드 선택 입력), verify 통과"
     },
     {
       "id": "T-030",
       "title": "후보 상태 변경 API(후보/보류/탈락/확정, 항목당 확정 다중 허용)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-027"
-      ]
+      ],
+      "note": "완료 근거: updateCandidateStatus 서버 액션 구현(candidate/pending/rejected/confirmed enum, 항목당 확정 개수 제한 없음), verify 통과"
     },
     {
       "id": "T-031",
       "title": "후보 상태 변경 UI(상태 배지/드롭다운)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-030"
-      ]
+      ],
+      "note": "완료 근거: CandidateList.tsx에 상태별 색상 배지 + 전환 버튼 구현, verify 통과"
     },
     {
       "id": "T-032",
       "title": "워크플레이스 상세 화면 - 후보 리스트 뷰",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-029",
         "T-031"
-      ]
+      ],
+      "note": "완료 근거: 워크플레이스 상세 화면(src/app/workspaces/[id]/page.tsx)에 후보 리스트 뷰 구현, verify 통과"
     },
     {
       "id": "T-033",
       "title": "후보 사진 업로드 - Supabase Storage 연동",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-028"
-      ]
+      ],
+      "note": "완료 근거: candidate-photos Storage 버킷 마이그레이션 적용, uploadCandidatePhoto 서버 액션 + 업로드 폼 구현, verify 통과"
     },
     {
       "id": "T-034",
       "title": "새 후보/코멘트 등록 시 앱 내 배지 알림 구현",
       "category": "workspace",
       "source_section": "D",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-032"
-      ]
+      ],
+      "note": "완료 근거: NewActivityBadge 컴포넌트로 localStorage 기반 마지막 방문 이후 신규 활동 배지 구현(푸시 없음 - D 결정 반영), verify 통과"
     },
     {
       "id": "T-035",
       "title": "Supabase Realtime 구독 - 후보 추가/수정 시 실시간 반영",
       "category": "workspace",
       "source_section": "D",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-032"
-      ]
+      ],
+      "note": "완료 근거: CandidateList.tsx에서 Supabase Realtime(postgres_changes) 구독으로 INSERT/UPDATE/DELETE 실시간 반영 구현, verify 통과"
     },
     {
       "id": "T-036",
