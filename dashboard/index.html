@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>backlog.json 대시보드</title>
+<style>
+  body { font-family: -apple-system, sans-serif; margin: 0; padding: 16px; color: #1a1a1a; background: #fafafa; }
+  h1 { font-size: 18px; margin: 0 0 12px; }
+  h3 { font-size: 15px; margin: 0 0 8px; }
+  .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  #file-info { font-size: 13px; margin-bottom: 12px; }
+  .muted { color: #666; font-size: 12px; }
+  .banner { padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+  .banner.error { background: #fde2e2; border: 1px solid #f5a3a3; }
+  .banner.warn { background: #fff3cd; border: 1px solid #ffe08a; }
+  .banner ul { margin: 4px 0 0; padding-left: 18px; }
+  #stats { display: flex; flex-direction: column; gap: 2px; font-size: 13px; margin-bottom: 8px; }
+  .status-counts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .pill { background: #e5e7eb; border-radius: 999px; padding: 2px 8px; font-size: 12px; }
+
+  #progress-wrap { margin-bottom: 14px; max-width: 640px; }
+  .progress-bar { display: flex; height: 16px; border-radius: 999px; overflow: hidden; background: #e5e7eb; }
+  .progress-seg { height: 100%; transition: width 0.2s; }
+  .progress-seg.status-todo { background: #cbd5e1; }
+  .progress-seg.status-doing { background: #60a5fa; }
+  .progress-seg.status-done { background: #34d399; }
+  .progress-seg.status-blocked { background: #f59e0b; }
+  .progress-seg.status-needs_info { background: #ec4899; }
+  .progress-seg.status-unknown { background: #a78bfa; }
+  .progress-label { font-size: 12px; color: #444; margin-top: 4px; }
+
+  .toggle-group { display: inline-flex; border: 1px solid #ccc; border-radius: 999px; overflow: hidden; background: #fff; }
+  .toggle-group label { padding: 4px 10px; font-size: 12px; cursor: pointer; user-select: none; }
+  .toggle-group input { position: absolute; opacity: 0; pointer-events: none; }
+  .toggle-group.active .on-label { background: #34d399; color: #fff; }
+  .toggle-group.disabled label { cursor: not-allowed; color: #aaa; }
+
+  .layout { display: flex; gap: 16px; align-items: flex-start; }
+  #task-list { flex: 1; min-width: 260px; max-width: 480px; }
+  .task-row { display: flex; gap: 8px; padding: 6px 8px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 13px; }
+  .task-row:hover { background: #eef2ff; }
+  .task-row.unknown-status { background: #fff3cd; }
+  .task-id { font-weight: 600; width: 56px; flex-shrink: 0; }
+  .task-status { width: 60px; flex-shrink: 0; color: #555; }
+  .task-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #task-detail { flex: 1; min-width: 300px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; font-size: 13px; }
+  .field-row { display: flex; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f2f2f2; }
+  .field-label { width: 100px; flex-shrink: 0; color: #666; }
+  .field-value { flex: 1; white-space: pre-wrap; word-break: break-word; }
+  .log-list { margin: 4px 0 8px; padding-left: 18px; }
+  .dep-link { margin-right: 4px; }
+  .dep-link.broken { color: #b00020; text-decoration: none; }
+  .doc-link { display: inline-block; margin-top: 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+  <h1>backlog.json 대시보드 (읽기 전용)</h1>
+
+  <div class="toolbar">
+    <input type="file" id="file-input" accept="application/json,.json" />
+    <button id="reload-btn" type="button">다시 불러오기(같은 파일 재선택)</button>
+    <select id="status-filter"></select>
+    <input type="text" id="search-input" placeholder="id / 제목 / note 검색" />
+    <div class="toggle-group" id="auto-refresh-toggle">
+      <label class="on-label"><input type="radio" name="auto-refresh" id="auto-refresh-on" value="on" />자동 새로고침 켜짐</label>
+      <label class="off-label"><input type="radio" name="auto-refresh" id="auto-refresh-off" value="off" checked />꺼짐</label>
+    </div>
+    <span id="refresh-status" class="muted"></span>
+  </div>
+
+  <div id="file-info"></div>
+  <div id="messages"></div>
+  <div id="stats"></div>
+  <div id="progress-wrap" hidden></div>
+
+  <div class="layout">
+    <div id="task-list"></div>
+    <div id="task-detail">
+      <span class="muted">왼쪽 목록에서 작업을 클릭하면 상세 정보가 여기 표시됩니다.</span>
+    </div>
+  </div>
+
+  <script src="dashboard-core.js"></script>
+  <script src="dashboard-render.js"></script>
+  <script src="dashboard-detail.js"></script>
+  <script>
+    const fileInput = document.getElementById("file-input");
+    fileInput.addEventListener("change", (ev) => {
+      const file = ev.target.files[0];
+      if (file) loadFile(file);
+    });
+    document.getElementById("reload-btn").addEventListener("click", () => fileInput.click());
+    document.getElementById("status-filter").addEventListener("change", (ev) => {
+      state.filterStatus = ev.target.value;
+      renderList();
+    });
+    document.getElementById("search-input").addEventListener("input", (ev) => {
+      state.searchText = ev.target.value;
+      renderList();
+    });
+
+    // 자동 새로고침 라디오: File System Access API가 있을 때만 실제로 동작한다(file://에는 없음).
+    const onRadio = document.getElementById("auto-refresh-on");
+    const offRadio = document.getElementById("auto-refresh-off");
+    const toggleWrap = document.getElementById("auto-refresh-toggle");
+    const refreshStatus = document.getElementById("refresh-status");
+
+    if (!supportsFileHandle) {
+      onRadio.disabled = true;
+      toggleWrap.classList.add("disabled");
+      refreshStatus.textContent = "이 실행 방식(예: file://)에서는 자동 새로고침을 지원하지 않습니다 — 로컬 서버로 열면 사용할 수 있습니다.";
+    }
+
+    onRadio.addEventListener("change", async () => {
+      if (!onRadio.checked) return;
+      updateAutoRefreshToggleStyle();
+      try {
+        await pickFileWithHandle();
+        startAutoRefresh();
+      } catch (e) {
+        offRadio.checked = true;
+        updateAutoRefreshToggleStyle();
+        refreshStatus.textContent = `자동 새로고침을 시작하지 못했습니다: ${e.message}`;
+      }
+    });
+    offRadio.addEventListener("change", () => {
+      if (!offRadio.checked) return;
+      stopAutoRefresh();
+      updateAutoRefreshToggleStyle();
+    });
+  </script>
+</body>
+</html>
