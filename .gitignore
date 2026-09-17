@@ -5,3 +5,18 @@ node_modules/
 .claude/.checkpoint-state.json
 .vscode/
 
+# Next.js
+/.next/
+/out/
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# 환경변수 (Supabase/네이버지도 키 등 비밀값) — .env.local.example만 커밋한다
+.env*
+!.env*.example
+
+.DS_Store
+*.pem
+

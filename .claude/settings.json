@@ -18,6 +18,11 @@
             "type": "command",
             "command": "node .claude/hooks/block-dangerous-commands.mjs",
             "statusMessage": "Checking for destructive/irreversible commands"
+          },
+          {
+            "type": "command",
+            "command": "claudebridge hook guard",
+            "statusMessage": "ClaudeBridge: 위험 명령어 차단 검증"
           }
         ]
       },
@@ -40,6 +45,11 @@
             "statusMessage": "Voice notice: user decision needed",
             "async": true,
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "claudebridge hook ask-question",
+            "statusMessage": "ClaudeBridge: 질문 대기 상태를 웹으로 전송"
           }
         ]
       }
@@ -106,6 +116,17 @@
             "command": "node .claude/hooks/auto-checkpoint.mjs",
             "statusMessage": "Periodic auto-commit/push checkpoint",
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claudebridge hook permission",
+            "statusMessage": "ClaudeBridge: 알림(권한 승인 대기 등)을 웹으로 전송"
           }
         ]
       }

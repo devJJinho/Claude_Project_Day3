@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #2b2620;
+  --color-muted: #8b8375;
+  --color-paper: #faf7f2;
+  --color-card: #ffffff;
+  --color-line: #e6dfd2;
+  --color-accent: #b4636f;
+  --color-accent-soft: #f1dee0;
+  --color-confirmed: #5b8266;
+  --color-confirmed-soft: #e4ebe0;
+  --color-pending: #c98a3c;
+  --color-pending-soft: #f5e7d3;
+  --color-rejected: #c2a6a2;
+  --color-candidate: #d8d2c6;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-muted: var(--color-muted);
+  --color-paper: var(--color-paper);
+  --color-card: var(--color-card);
+  --color-line: var(--color-line);
+  --color-accent: var(--color-accent);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-confirmed: var(--color-confirmed);
+  --color-confirmed-soft: var(--color-confirmed-soft);
+  --color-pending: var(--color-pending);
+  --color-pending-soft: var(--color-pending-soft);
+  --color-rejected: var(--color-rejected);
+  --color-candidate: var(--color-candidate);
+  --font-display: var(--font-gowun-batang);
+  --font-body: var(--font-gowun-dodum);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), serif;
+}

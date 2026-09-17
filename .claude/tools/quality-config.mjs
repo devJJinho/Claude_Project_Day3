@@ -9,12 +9,13 @@
 // 다시 검토해야 한다.
 export const LINE_LIMIT = 300;
 
-// 소스로 취급할 디렉터리(재귀 없음, 얕은 스캔) + 확장자. backlog.json(데이터), PROGRESS.md(생성물),
-// .backlog-backups/*.bak(생성물), node_modules(의존성)는 의도적으로 제외한다.
-// 애플리케이션 코드(E2 기술 스택 확정 후 생길 src/ 하위 디렉터리)는 아직 없다 — 생기면 여기에
-// 실제 .mjs/.js가 있는 하위 디렉터리를 각각 등록할 것(얕은 스캔이라 src 자체로는 부족함).
-export const SOURCE_DIRS = [".claude/hooks", ".claude/tools", "dashboard"];
-export const SOURCE_EXTENSIONS = [".mjs", ".js"];
+// 소스로 취급할 디렉터리(재귀 스캔, node_modules/.next 등 생성물 디렉터리는 자동 제외 —
+// check-code-length.mjs의 listSourceFiles 참고) + 확장자. backlog.json(데이터),
+// PROGRESS.md(생성물), .backlog-backups/*.bak(생성물)는 의도적으로 제외한다.
+// "src" 하나로 App Router의 모든 하위 라우트/컴포넌트 디렉터리를 재귀적으로 포함한다(T-001
+// Next.js 초기화로 추가됨).
+export const SOURCE_DIRS = [".claude/hooks", ".claude/tools", "dashboard", "src"];
+export const SOURCE_EXTENSIONS = [".mjs", ".js", ".ts", ".tsx"];
 
 // 이 프로젝트의 lint 명령. 외부 도구가 없으면 NOT_CONFIGURED로 보고하고 통과로 처리하지 않는다.
 // --deny-warnings 필수: oxlint는 기본적으로 warning만 있으면 exit 0(통과)로 처리한다 — 실제

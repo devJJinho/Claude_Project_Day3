@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// 소스 파일 줄 수 검사. backlog.json(데이터), PROGRESS.md/.bak(생성물), node_modules(의존성)는
-// SOURCE_DIRS/SOURCE_EXTENSIONS 설정 자체로 애초에 스캔 대상이 아니다.
+// 소스 파일 줄 수 검사. backlog.json(데이터), PROGRESS.md/.bak(생성물), node_modules/.next
+// (의존성·빌드 산출물)는 SOURCE_DIRS/SOURCE_EXTENSIONS 설정과 EXCLUDED_DIR_NAMES로 제외한다.
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -8,21 +8,31 @@ import { LINE_LIMIT, SOURCE_DIRS, SOURCE_EXTENSIONS } from "./quality-config.mjs
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 
+// src/ 아래에 재귀적으로 나타날 수 있는 생성물/의존성 디렉터리는 이름으로 걸러낸다.
+const EXCLUDED_DIR_NAMES = new Set(["node_modules", ".next", ".git", "dist", "build", "coverage"]);
+
+function walk(dirAbs, files) {
+  let entries;
+  try {
+    entries = readdirSync(dirAbs, { withFileTypes: true });
+  } catch {
+    return;
+  }
+  for (const entry of entries) {
+    if (entry.name.startsWith(".") || EXCLUDED_DIR_NAMES.has(entry.name)) continue;
+    const full = path.join(dirAbs, entry.name);
+    if (entry.isDirectory()) {
+      walk(full, files);
+    } else if (entry.isFile() && SOURCE_EXTENSIONS.some((ext) => entry.name.endsWith(ext))) {
+      files.push(full);
+    }
+  }
+}
+
 export function listSourceFiles() {
   const files = [];
   for (const dir of SOURCE_DIRS) {
-    const abs = path.join(PROJECT_ROOT, dir);
-    let entries;
-    try {
-      entries = readdirSync(abs);
-    } catch {
-      continue;
-    }
-    for (const name of entries) {
-      if (!SOURCE_EXTENSIONS.some((ext) => name.endsWith(ext))) continue;
-      const full = path.join(abs, name);
-      if (statSync(full).isFile()) files.push(full);
-    }
+    walk(path.join(PROJECT_ROOT, dir), files);
   }
   return files;
 }

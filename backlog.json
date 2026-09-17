@@ -29,7 +29,7 @@
       "deps": [
         "T-001"
       ],
-      "note": "환경 확인 완료(2026-09-17): Supabase CLI 영구 설치는 안 돼 있음(brew가 Xcode 라이선스 미동의로 막혀 있어 brew install 불가 - 사용자가 'sudo xcodebuild -license accept' 실행 필요). 'npx supabase' 방식은 정상 동작 확인. 단, supabase login은 브라우저 인증이 필요해 사용자가 직접 실행해야 함(node.js 스크립트로 대신 못함) - 로그인 후 프로젝트 생성으로 진행."
+      "note": "환경 확인(2026-09-17): 'supabase login'은 non-TTY 환경에서 자동 브라우저 인증 플로우를 거부함(LegacyLoginMissingTokenError) - '--token' 플래그 또는 SUPABASE_ACCESS_TOKEN 환경변수 필요. 셸 환경변수에도 토큰 없음 확인. 사용자가 본인 터미널(TTY 있는 환경)에서 로그인을 완료해야 함 - 완료 후 'npx supabase projects list'로 재확인 가능."
     },
     {
       "id": "T-004",

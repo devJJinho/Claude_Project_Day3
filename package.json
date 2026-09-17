@@ -2,14 +2,30 @@
   "name": "wedding-prep-site",
   "private": true,
   "type": "module",
-  "description": "결혼 준비 사이트 — 애플리케이션 코드는 아직 없음(기술 스택 미정). 현재는 backlog 관리 CLI/훅/대시보드 도구만 있음.",
+  "description": "결혼 준비 사이트 — Next.js(App Router) + Supabase + 네이버지도 + Vercel.",
   "scripts": {
-    "lint": "oxlint --deny-warnings .claude/hooks .claude/tools dashboard",
-    "build": "node .claude/tools/check-build.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "oxlint --deny-warnings .claude/hooks .claude/tools dashboard src",
     "check:length": "node .claude/tools/check-code-length.mjs",
-    "verify": "npm run check:length && npm run lint && npm run build"
+    "check:tools": "node .claude/tools/check-build.mjs",
+    "verify": "npm run check:length && npm run lint && npm run check:tools && npm run build"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/ssr": "^0.5.0"
   },
   "devDependencies": {
-    "oxlint": "^1.83.0"
+    "oxlint": "^1.83.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
