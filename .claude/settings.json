@@ -100,6 +100,12 @@
             "command": "node .claude/hooks/full-quality-check.mjs",
             "statusMessage": "Running full code-length + lint + build verification",
             "timeout": 120
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/auto-checkpoint.mjs",
+            "statusMessage": "Periodic auto-commit/push checkpoint",
+            "timeout": 30
           }
         ]
       }

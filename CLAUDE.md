@@ -63,5 +63,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `status-transition.md` — 허용 상태(`todo`/`doing`/`done`/`blocked`/`needs_info`)와 전이 조건, 완료 근거로 인정하지 않는 것
 - `code-structure.md` — 코드 책임 분리, 파일 길이, lint/build
 - `doc-sync.md` — PROGRESS.md/docs/backlog 문서가 언제·어떤 조건으로 갱신되는지
+- `commit-cadence.md` — 자동 커밋/푸시 훅(`auto-checkpoint.mjs`)의 주기와 권한 범위
+- `parallel-execution.md` — 언제 git worktree로 병렬 작업을 해도 되는지, backlog 의존성/파일 충돌 분석, 절차
 
 각 규칙 항목은 `[hook]`(기술적으로 검사/차단됨) / `[지침]`(Claude가 읽고 스스로 따름, 강제 없음) / `[리뷰]`(subagent가 확인)로 표시돼 있다.
