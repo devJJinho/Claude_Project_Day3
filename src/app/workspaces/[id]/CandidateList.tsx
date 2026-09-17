@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { updateCandidateStatus, type CandidateStatus } from "../actions";
+import { updateCandidateStatus, deleteCandidate, editCandidate, type CandidateStatus } from "../actions";
 import { uploadCandidatePhoto } from "../photo-actions";
 import { markWorkspaceVisited } from "../NewActivityBadge";
 
@@ -46,6 +46,7 @@ export function CandidateList({
   const [candidates, setCandidates] = useState(initialCandidates);
   const [isPending, startTransition] = useTransition();
   const [signedPhotoUrls, setSignedPhotoUrls] = useState<Record<string, string>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
     markWorkspaceVisited(workspaceId);
@@ -111,10 +112,62 @@ export function CandidateList({
         <li key={c.id} className="rounded-2xl border border-line bg-card p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="font-display text-base">{c.name ?? "(이름 없음)"}</p>
-            <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_COLOR[c.status]}`}>
-              {STATUS_LABEL[c.status]}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_COLOR[c.status]}`}>
+                {STATUS_LABEL[c.status]}
+              </span>
+              <button
+                type="button"
+                onClick={() => setEditingId(editingId === c.id ? null : c.id)}
+                className="text-xs text-muted underline"
+              >
+                수정
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  startTransition(async () => {
+                    await deleteCandidate(workspaceId, c.id);
+                  })
+                }
+                className="text-xs text-rejected underline"
+              >
+                삭제
+              </button>
+            </div>
           </div>
+
+          {editingId === c.id && (
+            <form
+              action={async (formData: FormData) => {
+                await editCandidate(workspaceId, c.id, formData);
+                setEditingId(null);
+              }}
+              className="mt-2 flex flex-col gap-2 rounded-lg border border-line p-3"
+            >
+              <input
+                name="name"
+                defaultValue={c.name ?? ""}
+                placeholder="이름"
+                className="rounded-lg border border-line px-2 py-1 text-sm"
+              />
+              <input
+                name="link"
+                defaultValue={c.link ?? ""}
+                placeholder="링크"
+                className="rounded-lg border border-line px-2 py-1 text-sm"
+              />
+              <textarea
+                name="comment"
+                defaultValue={c.comment ?? ""}
+                placeholder="코멘트"
+                className="rounded-lg border border-line px-2 py-1 text-sm"
+              />
+              <button type="submit" className="self-start rounded-full bg-accent px-3 py-1 text-xs text-white">
+                저장
+              </button>
+            </form>
+          )}
           {c.photo_url && signedPhotoUrls[c.photo_url] && (
             // eslint-disable-next-line @next/next/no-img-element -- 만료되는 signed URL, next/image 캐시 대상 아님
             <img
@@ -145,7 +198,7 @@ export function CandidateList({
             </button>
           </form>
 
-          <div className="mt-3 flex gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             {(Object.keys(STATUS_LABEL) as CandidateStatus[]).map((status) => (
               <button
                 key={status}

@@ -3,6 +3,7 @@ import { getCurrentCoupleId } from "@/lib/supabase/get-current-couple";
 import { RECOMMENDED_CATEGORIES } from "@/lib/categories";
 import { createWorkspace } from "./actions";
 import { NewActivityBadge } from "./NewActivityBadge";
+import { DeleteWorkspaceButton } from "./DeleteWorkspaceButton";
 
 export default async function WorkspacesPage() {
   const coupleId = await getCurrentCoupleId();
@@ -31,17 +32,18 @@ export default async function WorkspacesPage() {
 
       <ul className="flex flex-col gap-3">
         {(workspaces ?? []).map((w) => (
-          <li key={w.id}>
-            <a
-              href={`/workspaces/${w.id}`}
-              className="flex items-center justify-between rounded-2xl border border-line bg-card px-5 py-4 hover:border-accent"
-            >
+          <li
+            key={w.id}
+            className="flex items-center gap-2 rounded-2xl border border-line bg-card px-5 py-4 hover:border-accent"
+          >
+            <a href={`/workspaces/${w.id}`} className="flex flex-1 items-center justify-between">
               <span>
                 <span className="font-display block text-lg">{w.title}</span>
                 <span className="text-xs text-muted">{w.category}</span>
               </span>
               <NewActivityBadge workspaceId={w.id} latestActivityAt={latestActivityOf(w)} />
             </a>
+            <DeleteWorkspaceButton workspaceId={w.id} title={w.title} />
           </li>
         ))}
         {(workspaces ?? []).length === 0 && (

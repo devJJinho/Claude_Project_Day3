@@ -40,7 +40,7 @@ export function DashboardView({ workspaces }: { workspaces: WorkspaceSummary[] }
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-line bg-card p-5">
           <p className="text-xs text-muted">전체 후보</p>
           <p className="font-display text-3xl">{totals.total}개</p>
@@ -73,7 +73,7 @@ export function DashboardView({ workspaces }: { workspaces: WorkspaceSummary[] }
       </div>
 
       {view === "list" ? (
-        <ul className="grid grid-cols-2 gap-4">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {workspaces.map((w) => {
             const s = summarize(w.candidates);
             const latest = w.candidates.reduce(

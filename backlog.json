@@ -567,11 +567,11 @@
       "title": "후보/워크플레이스 수정·삭제 API+UI",
       "category": "workspace",
       "source_section": "F",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-032"
       ],
-      "note": "critical-reviewer 발견(2026-09-17): F(사용자가 직접 삭제) 전제를 충족할 수단이 backlog에 없음 — 생성/상태변경만 있고 수정·삭제가 없어 오등록 시 되돌릴 방법이 없음"
+      "note": "critical-reviewer 발견(2026-09-17): F(사용자가 직접 삭제) 전제를 충족할 수단이 backlog에 없음 — 생성/상태변경만 있고 수정·삭제가 없어 오등록 시 되돌릴 방법이 없음 | 완료 근거: actions.ts에 deleteCandidate/editCandidate/deleteWorkspace 서버 액션 추가, CandidateList.tsx에 수정/삭제 버튼(인라인 편집 폼) 및 DeleteWorkspaceButton(confirm 확인 후 삭제) 구현. verify 통과."
     },
     {
       "id": "T-052",
@@ -590,11 +590,11 @@
       "title": "전역 내비게이션(대시보드·워크플레이스·체크리스트·예산·D-day 진입)",
       "category": "dashboard",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-036"
       ],
-      "note": "critical-reviewer 발견(2026-09-17): layout.tsx에 nav가 없고 /checklist,/budget,/settings/wedding-date로 가는 링크가 0건 — 기능은 done이어도 UI에서 도달 불가"
+      "note": "critical-reviewer 발견(2026-09-17): layout.tsx에 nav가 없고 /checklist,/budget,/settings/wedding-date로 가는 링크가 0건 — 기능은 done이어도 UI에서 도달 불가 | 완료 근거: src/components/NavBar.tsx 추가, layout.tsx에 마운트 — 대시보드/항목/체크리스트/예산/결혼식 날짜 5개 링크로 모든 기존 done 기능에 도달 가능. verify 통과."
     },
     {
       "id": "T-054",
@@ -612,11 +612,11 @@
       "title": "모바일 반응형 점검(대시보드/워크스페이스 상세/체크리스트/예산)",
       "category": "dashboard",
       "source_section": "E",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-036"
       ],
-      "note": "critical-reviewer 발견(2026-09-17): E(반응형 웹)가 핵심 제약인데 backlog 전체에 반응형/모바일 검증 태스크가 0건"
+      "note": "critical-reviewer 발견(2026-09-17): E(반응형 웹)가 핵심 제약인데 backlog 전체에 반응형/모바일 검증 태스크가 0건 | 완료 근거: 정적 코드 감사로 grid-cols-3/grid-cols-2(대시보드 스탯/워크스페이스 카드)가 브레이크포인트 없이 고정된 것 발견, sm: 브레이크포인트 추가해 모바일에서 1열로 스택되도록 수정. 상태 변경 버튼 줄바꿈(flex-wrap) 추가. NavBar는 overflow-x-auto로 작은 화면 대응. verify(next build) 통과 확인 — 단, 실제 기기/브라우저 뷰포트에서의 시각 검증(로그인 필요)은 auth 미구현으로 못함, 정적 CSS 감사로 대체."
     },
     {
       "id": "T-056",
