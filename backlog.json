@@ -472,20 +472,22 @@
       "title": "체크리스트 항목 추가/완료 토글 API",
       "category": "checklist",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-009"
-      ]
+      ],
+      "note": "완료 근거: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 구현 — getCurrentCoupleId()로 커플 미연결/비로그인 시 조용히 무시, couple_id를 서버에서 직접 조회해 삽입/조건절에 명시(RLS와 별개의 방어적 검증). npm run verify(length/lint/check:tools/next build) 전체 통과 확인. 실제 로그인 세션으로 브라우저 E2E는 auth 미구현으로 테스트 불가(사전 공지된 제약) — 코드 리뷰와 빌드 통과로 검증."
     },
     {
       "id": "T-044",
       "title": "체크리스트 UI 구현",
       "category": "checklist",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-043"
-      ]
+      ],
+      "note": "완료 근거: src/app/checklist/page.tsx(Server Component, getCurrentCoupleId()로 비로그인/미연결 시 '로그인이 필요합니다' 안내), checklist-list.tsx(체크박스 토글, useTransition으로 toggleChecklistItem 호출), add-checklist-form.tsx(입력 폼, useTransition으로 addChecklistItem 호출 후 입력창 reset) 구현. globals.css 기존 토큰(ink/muted/paper/card/line/accent)만 사용, 새 팔레트 도입 없음. npm run verify(length/lint/check:tools/next build) 전체 통과 — /checklist가 동적 라우트(ƒ)로 정상 빌드됨 확인. 실 로그인 세션 브라우저 E2E는 auth 미구현으로 불가(사전 공지된 제약) — 코드 리뷰·타입체크·빌드 통과로 검증."
     },
     {
       "id": "T-045",
