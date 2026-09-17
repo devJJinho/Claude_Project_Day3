@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 소스 파일 줄 수 검사. backlog.json(데이터), PROGRESS.md/.bak(생성물), node_modules/.next
 // (의존성·빌드 산출물)는 SOURCE_DIRS/SOURCE_EXTENSIONS 설정과 EXCLUDED_DIR_NAMES로 제외한다.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { LINE_LIMIT, SOURCE_DIRS, SOURCE_EXTENSIONS } from "./quality-config.mjs";

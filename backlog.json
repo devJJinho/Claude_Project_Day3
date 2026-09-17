@@ -8,28 +8,30 @@
       "title": "Next.js(TypeScript, App Router) 프로젝트 초기화",
       "category": "infra",
       "source_section": "E2",
-      "status": "todo"
+      "status": "done",
+      "note": "완료 근거: Next.js 16(App Router,TS)+Tailwind v4 스캐폴드 생성, npm run build 성공(정적 페이지 2개 생성 확인)"
     },
     {
       "id": "T-002",
       "title": "Tailwind CSS 설정",
       "category": "infra",
       "source_section": "E2",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-001"
-      ]
+      ],
+      "note": "완료 근거: create-next-app app-tw 템플릿으로 Tailwind v4 설정 완료, globals.css에 브랜드 토큰(@theme inline) 적용, build 통과"
     },
     {
       "id": "T-003",
       "title": "Supabase 프로젝트 생성 및 환경변수(.env) 연결",
       "category": "infra",
       "source_section": "E2,E3",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-001"
       ],
-      "note": "환경 확인(2026-09-17): 'supabase login'은 non-TTY 환경에서 자동 브라우저 인증 플로우를 거부함(LegacyLoginMissingTokenError) - '--token' 플래그 또는 SUPABASE_ACCESS_TOKEN 환경변수 필요. 셸 환경변수에도 토큰 없음 확인. 사용자가 본인 터미널(TTY 있는 환경)에서 로그인을 완료해야 함 - 완료 후 'npx supabase projects list'로 재확인 가능."
+      "note": "환경 확인(2026-09-17): 'supabase login'은 non-TTY 환경에서 자동 브라우저 인증 플로우를 거부함(LegacyLoginMissingTokenError) - '--token' 플래그 또는 SUPABASE_ACCESS_TOKEN 환경변수 필요. 셸 환경변수에도 토큰 없음 확인. 사용자가 본인 터미널(TTY 있는 환경)에서 로그인을 완료해야 함 - 완료 후 'npx supabase projects list'로 재확인 가능. | 완료 근거: Supabase 신규 프로젝트 생성(ref zkcwbczpzkycpwhhrizk, ap-northeast-2), supabase link 완료, .env.local 구성, @supabase/ssr 기반 client.ts/server.ts 작성, npm run build 통과"
     },
     {
       "id": "T-004",
@@ -47,115 +49,125 @@
       "title": "Supabase DB 스키마: users/profile 테이블 생성",
       "category": "infra",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-003"
-      ]
+      ],
+      "note": "완료 근거: profiles 테이블+RLS+handle_new_user 트리거 마이그레이션 적용 완료(20260917133259), anon 키로 select 시 0 rows 확인(RLS 정상)"
     },
     {
       "id": "T-006",
       "title": "Supabase DB 스키마: couple(커플 연결) 테이블 생성",
       "category": "infra",
       "source_section": "A",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-003"
-      ]
+      ],
+      "note": "완료 근거: couples/couple_members 테이블+RLS 마이그레이션 적용 완료(20260917133302, RLS 재귀 버그 20260917133517에서 수정), anon 키 테스트로 접근 차단 확인"
     },
     {
       "id": "T-007",
       "title": "Supabase DB 스키마: workspace(항목) 테이블 생성",
       "category": "infra",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-003"
-      ]
+      ],
+      "note": "완료 근거: workspaces 테이블+RLS 마이그레이션 적용 완료(20260917133305), anon 키로 select 시 0 rows 확인"
     },
     {
       "id": "T-008",
       "title": "Supabase DB 스키마: candidate(후보) 테이블 생성(링크/위치/코멘트/가격/사진/예약/평점/상태)",
       "category": "infra",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-007"
-      ]
+      ],
+      "note": "완료 근거: candidates 테이블(상태 enum 4종 포함)+RLS 마이그레이션 적용 완료(20260917133305), created_by는 on delete set null로 탈퇴 후에도 데이터 보존"
     },
     {
       "id": "T-009",
       "title": "Supabase DB 스키마: checklist 테이블 생성",
       "category": "infra",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-006"
-      ]
+      ],
+      "note": "완료 근거: checklist_items 테이블+RLS 마이그레이션 적용 완료(20260917133308)"
     },
     {
       "id": "T-010",
       "title": "Supabase DB 스키마: budget 테이블 생성",
       "category": "infra",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-006"
-      ]
+      ],
+      "note": "완료 근거: budget_items 테이블+RLS 마이그레이션 적용 완료(20260917133308)"
     },
     {
       "id": "T-011",
       "title": "Supabase DB 스키마: wedding_date(D-day) 필드 추가",
       "category": "infra",
       "source_section": "G",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-006"
-      ]
+      ],
+      "note": "완료 근거: couples.wedding_date 필드 마이그레이션 적용 완료(20260917133302, couples 테이블 생성에 포함)"
     },
     {
       "id": "T-012",
       "title": "Supabase RLS 정책: 초대·승인된 참여자만 접근 가능하도록 설정",
       "category": "infra",
       "source_section": "F",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-006",
         "T-007",
         "T-008",
         "T-009",
         "T-010"
-      ]
+      ],
+      "note": "완료 근거: is_couple_member() security definer 함수로 RLS 재귀 버그 수정 후, anon 키(비인증)로 7개 테이블(workspaces/candidates/couples/couple_members/checklist_items/budget_items/profiles) 전체 조회 시 전부 0 rows/status 200 확인 - 비공개 기본 정책 정상 동작. 실제 인증된 멤버의 '보이는지' 여부(positive path)는 로그인 UI(T-016) 완성 후 재검증 필요."
     },
     {
       "id": "T-013",
       "title": "Supabase Auth 구글 소셜로그인 연동",
       "category": "auth",
       "source_section": "A",
-      "status": "todo",
+      "status": "needs_info",
       "deps": [
         "T-003"
-      ]
+      ],
+      "note": "Google Cloud Console에서 OAuth 2.0 클라이언트(웹 앱) 생성 필요 - 승인된 리디렉션 URI에 Supabase 콜백 주소(https://zkcwbczpzkycpwhhrizk.supabase.co/auth/v1/callback) 등록 후 클라이언트 ID/시크릿을 Supabase Dashboard > Authentication > Providers > Google에 입력해야 진행 가능. 외부 계정 접근이 필요해 제가 대신 못함."
     },
     {
       "id": "T-014",
       "title": "Supabase Auth 카카오 소셜로그인 연동",
       "category": "auth",
       "source_section": "A",
-      "status": "todo",
+      "status": "needs_info",
       "deps": [
         "T-003"
-      ]
+      ],
+      "note": "Kakao Developers에서 애플리케이션 생성 + 카카오 로그인 활성화 필요 - Redirect URI에 https://zkcwbczpzkycpwhhrizk.supabase.co/auth/v1/callback 등록, REST API 키/Client Secret을 Supabase Dashboard > Authentication > Providers > Kakao(OIDC 방식)에 입력해야 진행 가능. 외부 계정 접근이 필요해 제가 대신 못함."
     },
     {
       "id": "T-015",
       "title": "Supabase Auth 네이버 소셜로그인 연동",
       "category": "auth",
       "source_section": "A",
-      "status": "todo",
+      "status": "needs_info",
       "deps": [
         "T-003"
       ],
-      "note": "Supabase 기본 제공 OAuth provider 목록에 네이버가 없을 수 있음 - 커스텀 OAuth 플로우 필요 여부 조사 선행"
+      "note": "네이버 로그인은 Supabase 기본 제공 provider 목록에 없음(조사 완료) - Supabase Auth의 'Custom OAuth'/Generic OIDC 설정 또는 네이버 개발자센터 앱 등록 후 커스텀 연동 필요. 외부 계정 접근 + 설계 판단이 필요해 사용자 확인 후 진행."
     },
     {
       "id": "T-016",
@@ -248,10 +260,11 @@
       "title": "추천 카테고리 상수 정의(결혼식장/스튜디오/메이크업/드레스/신혼여행 등)",
       "category": "workspace",
       "source_section": "B",
-      "status": "todo",
+      "status": "done",
       "deps": [
         "T-001"
-      ]
+      ],
+      "note": "완료 근거: src/lib/categories.ts에 RECOMMENDED_CATEGORIES 상수 작성, build 통과"
     },
     {
       "id": "T-025",
@@ -403,10 +416,11 @@
       "title": "네이버지도 API 키 발급 및 프로젝트 연동",
       "category": "map",
       "source_section": "C",
-      "status": "todo",
+      "status": "needs_info",
       "deps": [
         "T-001"
-      ]
+      ],
+      "note": "네이버클라우드플랫폼(NCP) 콘솔에서 Maps API(AI·NAVER API) 신청 및 Client ID 발급 필요 - 발급 후 .env.local의 NEXT_PUBLIC_NAVER_MAP_CLIENT_ID에 값만 채우면 됨(자리는 이미 마련해둠). 외부 계정 접근이 필요해 제가 대신 못함."
     },
     {
       "id": "T-040",

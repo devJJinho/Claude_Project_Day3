@@ -1,16 +1,20 @@
 #!/usr/bin/env node
-// 이 프로젝트(Node ESM 스크립트, 번들러/트랜스파일러 없음)에는 별도의 "빌드 산출물 생성" 단계가
-// 없다 — 소스를 그대로 node로 실행하기 때문이다. 그렇다고 build를 통과로 조작하지 않기 위해,
-// 실제로 수행 가능한 대체 검증으로 모든 소스 파일에 `node --check`(문법+모듈 해석 검사, 실행은
-// 하지 않음)를 돌린다. 완료 조건: SOURCE_DIRS의 모든 .mjs 파일에서 node --check가 exit 0.
+// .claude/hooks, .claude/tools, dashboard의 Node ESM 스크립트(.mjs/.js)에는 번들러/트랜스파일러가
+// 없어 별도의 "빌드 산출물 생성" 단계가 없다 — 소스를 그대로 node로 실행하기 때문이다. 그래서
+// `node --check`(문법+모듈 해석 검사, 실행은 하지 않음)로 대체 검증한다.
+// src/(Next.js 앱, .ts/.tsx)는 대상이 아니다 — `node --check`는 JSX/TS 구문을 이해하지 못해
+// ERR_UNKNOWN_FILE_EXTENSION으로 실패한다. 그 대신 실제 `next build`(npm run build, verify의
+// 마지막 단계)가 TypeScript 타입 검사까지 포함해 검증한다 — 이 스크립트와 역할이 겹치지 않는다.
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { listSourceFiles } from "./check-code-length.mjs";
 import { INNER_CHECK_TIMEOUT_MS } from "./quality-config.mjs";
 
+const NODE_CHECKABLE_EXTENSIONS = [".mjs", ".js"];
+
 export function runBuildCheck() {
-  const files = listSourceFiles();
+  const files = listSourceFiles().filter((f) => NODE_CHECKABLE_EXTENSIONS.some((ext) => f.endsWith(ext)));
   const failures = [];
   const timeouts = [];
 
@@ -36,7 +40,7 @@ function isMain() {
 }
 
 if (isMain()) {
-  console.log("이 스택(Node ESM 스크립트)에는 별도 빌드 단계가 없습니다 — 대체 검증: 전체 소스 `node --check`.");
+  console.log(".claude 도구 스크립트(.mjs/.js) 문법 검사: `node --check` (앱 코드는 `next build`가 별도로 검증).");
   const { files, failures, timeouts } = runBuildCheck();
   if (failures.length === 0 && timeouts.length === 0) {
     console.log(`build(문법 검사) 통과: ${files.length}개 파일`);
