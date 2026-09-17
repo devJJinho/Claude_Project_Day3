@@ -472,7 +472,7 @@
       "title": "체크리스트 항목 추가/완료 토글 API",
       "category": "checklist",
       "source_section": "G",
-      "status": "done",
+      "status": "doing",
       "deps": [
         "T-009"
       ],
