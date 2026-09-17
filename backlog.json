@@ -180,7 +180,8 @@
         "T-013",
         "T-014",
         "T-015"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): src/app/login/page.tsx(구글/카카오 버튼, 네이버는 커스텀 OAuth 필요해 제외 — T-015 참고), src/app/auth/callback/route.ts(code exchange), src/app/auth/actions.ts(signOut), NavBar에 로그인/로그아웃 상태 표시 연동. npm run verify 통과. deps(T-013/014/015)가 needs_info라 CLI가 done 전이를 막음 — 실제 provider 활성화 전까지는 todo로 유지, provider 켜지는 즉시 동작함."
     },
     {
       "id": "T-017",
@@ -202,7 +203,8 @@
       "deps": [
         "T-006",
         "T-017"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): create_my_couple/ensure_invite_code RPC(security definer) 작성·적용, src/app/invite/actions.ts + InviteForms.tsx(InviteCodeBox)로 UI 연동. deps(T-006 done, T-017 todo — T-017이 T-016에 막혀 todo)라 CLI가 done 전이를 막음. 실제 동작은 T-016 완료 후 가능."
     },
     {
       "id": "T-019",
@@ -212,7 +214,8 @@
       "status": "todo",
       "deps": [
         "T-018"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): join_couple_by_invite_code RPC 작성·적용(신규 사용자가 멤버 되기 전 couples를 조회 못하는 문제를 security definer로 우회), JoinCoupleForm.tsx 구현. deps(T-018)가 todo라 CLI가 done 전이를 막음."
     },
     {
       "id": "T-020",
@@ -223,7 +226,8 @@
       "deps": [
         "T-006",
         "T-017"
-      ]
+      ],
+      "note": "설계 단순화(2026-09-17): profiles를 다른 사용자가 검색할 수단이 없어(F 비공개 원칙과 상충) '소셜 계정 지정' 초대 대신, 커플 연결과 동일한 초대 코드 공유 방식으로 통일(join_couple_by_invite_code 재사용). 코드는 T-018/019와 공유. deps(T-006 done, T-017 todo)라 CLI가 done 전이를 막음."
     },
     {
       "id": "T-021",
@@ -233,7 +237,8 @@
       "status": "todo",
       "deps": [
         "T-020"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): approve_couple_member/leave_or_reject_couple_member RPC 작성·적용, MemberList.tsx에 수락/거절 버튼 구현. deps(T-020)가 todo라 CLI가 done 전이를 막음."
     },
     {
       "id": "T-022",
@@ -243,7 +248,8 @@
       "status": "todo",
       "deps": [
         "T-021"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): /invite 페이지에 '승인 대기 N건' 섹션으로 대기 목록을 표시(배지 대신 목록 자체가 알림 역할). deps(T-021)가 todo라 CLI가 done 전이를 막음."
     },
     {
       "id": "T-023",
@@ -254,7 +260,8 @@
       "deps": [
         "T-006",
         "T-017"
-      ]
+      ],
+      "note": "코드 작성 완료(2026-09-17): src/app/api/account/route.ts(DELETE) — 본인 세션으로 신원 확인 후 service_role Admin API로 auth.users만 삭제(candidates.created_by는 on delete set null이라 등록 데이터는 유지). DeleteAccountButton.tsx 구현. deps(T-006 done, T-017 todo)라 CLI가 done 전이를 막음."
     },
     {
       "id": "T-024",
