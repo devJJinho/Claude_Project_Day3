@@ -38,9 +38,10 @@
       "title": "Vercel 프로젝트 연결 및 배포 파이프라인 설정",
       "category": "infra",
       "source_section": "E3",
-      "status": "todo",
+      "status": "doing",
       "deps": [
-        "T-001"
+        "T-001",
+        "T-003"
       ],
       "note": "환경 확인 완료(2026-09-17): Vercel CLI v59.18.0 설치됨, devjjinho 계정으로 이미 로그인됨(vercel whoami 확인). 프로젝트 생성/배포 즉시 가능."
     },
@@ -472,11 +473,11 @@
       "title": "체크리스트 항목 추가/완료 토글 API",
       "category": "checklist",
       "source_section": "G",
-      "status": "doing",
+      "status": "done",
       "deps": [
         "T-009"
       ],
-      "note": "완료 근거: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 구현 — getCurrentCoupleId()로 커플 미연결/비로그인 시 조용히 무시, couple_id를 서버에서 직접 조회해 삽입/조건절에 명시(RLS와 별개의 방어적 검증). npm run verify(length/lint/check:tools/next build) 전체 통과 확인. 실제 로그인 세션으로 브라우저 E2E는 auth 미구현으로 테스트 불가(사전 공지된 제약) — 코드 리뷰와 빌드 통과로 검증."
+      "note": "완료 근거: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 구현 — getCurrentCoupleId()로 커플 미연결/비로그인 시 조용히 무시, couple_id를 서버에서 직접 조회해 삽입/조건절에 명시(RLS와 별개의 방어적 검증). npm run verify(length/lint/check:tools/next build) 전체 통과 확인. 실제 로그인 세션으로 브라우저 E2E는 auth 미구현으로 테스트 불가(사전 공지된 제약) — 코드 리뷰와 빌드 통과로 검증. | 완료 근거: 실수로 doing으로 되돌렸던 것을 원복: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 기존 구현 확인, npm run verify(length/lint/check:tools/next build) 재실행 재통과 확인(2026-09-17)."
     },
     {
       "id": "T-044",
@@ -541,6 +542,7 @@
       "status": "todo",
       "deps": [
         "T-012",
+        "T-016",
         "T-018",
         "T-020"
       ]
@@ -553,8 +555,35 @@
       "status": "todo",
       "deps": [
         "T-004",
-        "T-049"
+        "T-049",
+        "T-042",
+        "T-044",
+        "T-046",
+        "T-048"
       ]
+    },
+    {
+      "id": "T-051",
+      "title": "후보/워크플레이스 수정·삭제 API+UI",
+      "category": "workspace",
+      "source_section": "F",
+      "status": "todo",
+      "deps": [
+        "T-032"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17): F(사용자가 직접 삭제) 전제를 충족할 수단이 backlog에 없음 — 생성/상태변경만 있고 수정·삭제가 없어 오등록 시 되돌릴 방법이 없음"
+    },
+    {
+      "id": "T-052",
+      "title": "후보 위치 지오코딩(주소·장소검색 → lat/lng) 연동",
+      "category": "map",
+      "source_section": "C",
+      "status": "todo",
+      "deps": [
+        "T-039",
+        "T-029"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17): candidates.lat/lng 컬럼은 있으나 이를 채우는 입력 수단(주소 검색/지오코딩)이 없어 T-040(마커 표시)이 착수해도 표시할 좌표가 없음"
     }
   ]
 }
