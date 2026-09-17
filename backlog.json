@@ -635,6 +635,14 @@
         "T-033"
       ],
       "note": "critical-reviewer 발견(2026-09-17, Critical): 현재 candidate-photos 버킷이 public=true(전원 읽기 가능)이고 insert/delete 정책이 auth.role()='authenticated'만 검사 — 커플 멤버십 확인이 없어 로그인한 아무나 타 커플 사진을 업로드/삭제 가능. F(기본 비공개) 위반. 프로덕션이 이미 공개 배포됨(T-004) — 사용자 확인 후 private 버킷 + signed URL + is_couple_member() 기반 정책으로 전환 필요 | 완료 근거: storage.buckets.public=false로 전환, select/insert/delete 정책을 경로 첫 세그먼트(workspace_id)의 is_couple_member()로 스코프. photo-actions.ts는 이제 공개 URL 대신 저장 경로만 candidates.photo_url에 저장, CandidateList.tsx가 표시 시점에 createSignedUrls(10분)로 발급. anon 키로 getBucket 시 null(비공개 확인), list 시 0건. npm run verify 통과."
+    },
+    {
+      "id": "T-057",
+      "title": "체크리스트 항목에 담당자(신랑/신부/공동) 구분 기능 추가 여부",
+      "category": "checklist",
+      "source_section": "확인 필요(사용자 결정)",
+      "status": "needs_info",
+      "note": "ClaudeBridge 데모용으로 생성됨(2026-09-18). 개발요청서에는 체크리스트 항목별 담당자 구분에 대한 언급이 없음 — 각 할 일에 신랑/신부/공동 담당을 지정하는 기능을 추가할지 사용자 확인 필요. 필요 없다고 판단되면 needs_info를 유지한 채 두거나 blocked/todo로 정리 가능."
     }
   ]
 }
