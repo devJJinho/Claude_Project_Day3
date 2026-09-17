@@ -38,12 +38,12 @@
       "title": "Vercel 프로젝트 연결 및 배포 파이프라인 설정",
       "category": "infra",
       "source_section": "E3",
-      "status": "doing",
+      "status": "done",
       "deps": [
         "T-001",
         "T-003"
       ],
-      "note": "환경 확인 완료(2026-09-17): Vercel CLI v59.18.0 설치됨, devjjinho 계정으로 이미 로그인됨(vercel whoami 확인). 프로젝트 생성/배포 즉시 가능."
+      "note": "환경 확인 완료(2026-09-17): Vercel CLI v59.18.0 설치됨, devjjinho 계정으로 이미 로그인됨(vercel whoami 확인). 프로젝트 생성/배포 즉시 가능. | 완료 근거: 사용자가 직접 vercel link + 배포 진행 확인(wedding-prep-day4 프로젝트, jay-a2f01 팀). Supabase 연동으로 NEXT_PUBLIC_SUPABASE_URL/ANON_KEY가 Production/Preview/Development 전 환경에 설정됨. https://wedding-prep-day4.vercel.app 실제 접속해 HTTP 200 및 정상 렌더링(\"결혼 준비 사이트\") 확인."
     },
     {
       "id": "T-005",
@@ -443,7 +443,7 @@
       "source_section": "C",
       "status": "todo",
       "deps": [
-        "T-039",
+        "T-052",
         "T-027"
       ]
     },
@@ -477,7 +477,7 @@
       "deps": [
         "T-009"
       ],
-      "note": "완료 근거: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 구현 — getCurrentCoupleId()로 커플 미연결/비로그인 시 조용히 무시, couple_id를 서버에서 직접 조회해 삽입/조건절에 명시(RLS와 별개의 방어적 검증). npm run verify(length/lint/check:tools/next build) 전체 통과 확인. 실제 로그인 세션으로 브라우저 E2E는 auth 미구현으로 테스트 불가(사전 공지된 제약) — 코드 리뷰와 빌드 통과로 검증. | 완료 근거: 실수로 doing으로 되돌렸던 것을 원복: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 기존 구현 확인, npm run verify(length/lint/check:tools/next build) 재실행 재통과 확인(2026-09-17)."
+      "note": "완료 근거: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 구현 — getCurrentCoupleId()로 커플 미연결/비로그인 시 조용히 무시, couple_id를 서버에서 직접 조회해 삽입/조건절에 명시(RLS와 별개의 방어적 검증). npm run verify(length/lint/check:tools/next build) 전체 통과 확인. 실제 로그인 세션으로 브라우저 E2E는 auth 미구현으로 테스트 불가(사전 공지된 제약) — 코드 리뷰와 빌드 통과로 검증. | 완료 근거: 실수로 doing으로 되돌렸던 것을 원복: src/app/checklist/actions.ts에 addChecklistItem/toggleChecklistItem Server Action 기존 구현 확인, npm run verify(length/lint/check:tools/next build) 재실행 재통과 확인(2026-09-17). | 완료 근거: critical-reviewer 리뷰(스냅샷 hash a816a52d..., 2026-09-17) 완료 — 사후 검토로 확인, 1차 완료 근거(addChecklistItem/toggleChecklistItem 구현+verify 통과)는 유효함. 이전 done→doing 되돌림은 운영 실수였고 즉시 원복됨."
     },
     {
       "id": "T-044",
@@ -584,6 +584,50 @@
         "T-029"
       ],
       "note": "critical-reviewer 발견(2026-09-17): candidates.lat/lng 컬럼은 있으나 이를 채우는 입력 수단(주소 검색/지오코딩)이 없어 T-040(마커 표시)이 착수해도 표시할 좌표가 없음"
+    },
+    {
+      "id": "T-053",
+      "title": "전역 내비게이션(대시보드·워크플레이스·체크리스트·예산·D-day 진입)",
+      "category": "dashboard",
+      "source_section": "G",
+      "status": "todo",
+      "deps": [
+        "T-036"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17): layout.tsx에 nav가 없고 /checklist,/budget,/settings/wedding-date로 가는 링크가 0건 — 기능은 done이어도 UI에서 도달 불가"
+    },
+    {
+      "id": "T-054",
+      "title": "인증 연결 후 기존 done 기능 E2E 재검증(대시보드/워크스페이스/체크리스트/예산/D-day)",
+      "category": "infra",
+      "source_section": "확인된 사실",
+      "status": "todo",
+      "deps": [
+        "T-017"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17): T-025~T-038,T-043~T-048이 로그인 미구현 상태(getCurrentCoupleId 항상 null)에서 build 통과만으로 done 처리됨 — 실 데이터로 동작 검증된 적 없음"
+    },
+    {
+      "id": "T-055",
+      "title": "모바일 반응형 점검(대시보드/워크스페이스 상세/체크리스트/예산)",
+      "category": "dashboard",
+      "source_section": "E",
+      "status": "todo",
+      "deps": [
+        "T-036"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17): E(반응형 웹)가 핵심 제약인데 backlog 전체에 반응형/모바일 검증 태스크가 0건"
+    },
+    {
+      "id": "T-056",
+      "title": "candidate-photos Storage 버킷 비공개 전환 + 커플 멤버십 기반 정책",
+      "category": "workspace",
+      "source_section": "F",
+      "status": "done",
+      "deps": [
+        "T-033"
+      ],
+      "note": "critical-reviewer 발견(2026-09-17, Critical): 현재 candidate-photos 버킷이 public=true(전원 읽기 가능)이고 insert/delete 정책이 auth.role()='authenticated'만 검사 — 커플 멤버십 확인이 없어 로그인한 아무나 타 커플 사진을 업로드/삭제 가능. F(기본 비공개) 위반. 프로덕션이 이미 공개 배포됨(T-004) — 사용자 확인 후 private 버킷 + signed URL + is_couple_member() 기반 정책으로 전환 필요 | 완료 근거: storage.buckets.public=false로 전환, select/insert/delete 정책을 경로 첫 세그먼트(workspace_id)의 is_couple_member()로 스코프. photo-actions.ts는 이제 공개 URL 대신 저장 경로만 candidates.photo_url에 저장, CandidateList.tsx가 표시 시점에 createSignedUrls(10분)로 발급. anon 키로 getBucket 시 null(비공개 확인), list 시 0건. npm run verify 통과."
     }
   ]
 }

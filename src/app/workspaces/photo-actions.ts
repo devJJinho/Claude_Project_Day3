@@ -22,13 +22,11 @@ export async function uploadCandidatePhoto(
     .upload(path, file, { contentType: file.type, upsert: false });
   if (uploadError) return { error: uploadError.message };
 
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("candidate-photos").getPublicUrl(path);
-
+  // 버킷이 비공개(T-056)라 공개 URL 대신 스토리지 경로만 저장한다 — 실제 표시할 때마다
+  // signed URL을 새로 발급한다(만료되는 URL을 DB에 고정 저장하지 않기 위함).
   const { error: updateError } = await supabase
     .from("candidates")
-    .update({ photo_url: publicUrl })
+    .update({ photo_url: path })
     .eq("id", candidateId);
   if (updateError) return { error: updateError.message };
 

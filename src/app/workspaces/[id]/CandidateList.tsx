@@ -45,10 +45,33 @@ export function CandidateList({
 }) {
   const [candidates, setCandidates] = useState(initialCandidates);
   const [isPending, startTransition] = useTransition();
+  const [signedPhotoUrls, setSignedPhotoUrls] = useState<Record<string, string>>({});
 
   useEffect(() => {
     markWorkspaceVisited(workspaceId);
   }, [workspaceId]);
+
+  // T-056 이후 candidates.photo_url은 공개 URL이 아니라 스토리지 경로다 — 표시 시점마다
+  // signed URL을 새로 발급한다(커플 멤버가 아니면 select 정책에 막혀 발급 자체가 실패한다).
+  useEffect(() => {
+    const paths = candidates.map((c) => c.photo_url).filter((p): p is string => Boolean(p));
+    if (paths.length === 0) return;
+
+    const supabase = createClient();
+    supabase.storage
+      .from("candidate-photos")
+      .createSignedUrls(paths, 60 * 10)
+      .then(({ data }) => {
+        if (!data) return;
+        setSignedPhotoUrls((prev) => {
+          const next = { ...prev };
+          for (const item of data) {
+            if (item.signedUrl && item.path) next[item.path] = item.signedUrl;
+          }
+          return next;
+        });
+      });
+  }, [candidates]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -92,9 +115,13 @@ export function CandidateList({
               {STATUS_LABEL[c.status]}
             </span>
           </div>
-          {c.photo_url && (
-            // eslint-disable-next-line @next/next/no-img-element -- Supabase Storage public URL, no next/image domain config yet
-            <img src={c.photo_url} alt={c.name ?? "후보 사진"} className="mt-2 h-32 w-full rounded-lg object-cover" />
+          {c.photo_url && signedPhotoUrls[c.photo_url] && (
+            // eslint-disable-next-line @next/next/no-img-element -- 만료되는 signed URL, next/image 캐시 대상 아님
+            <img
+              src={signedPhotoUrls[c.photo_url]}
+              alt={c.name ?? "후보 사진"}
+              className="mt-2 h-32 w-full rounded-lg object-cover"
+            />
           )}
           {c.comment && <p className="mt-1 text-sm text-muted">{c.comment}</p>}
           <div className="mt-2 flex flex-wrap gap-3 text-xs text-muted">
