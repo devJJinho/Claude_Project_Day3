@@ -643,6 +643,14 @@
       "source_section": "확인 필요(사용자 결정)",
       "status": "needs_info",
       "note": "ClaudeBridge 데모용으로 생성됨(2026-09-18). 개발요청서에는 체크리스트 항목별 담당자 구분에 대한 언급이 없음 — 각 할 일에 신랑/신부/공동 담당을 지정하는 기능을 추가할지 사용자 확인 필요. 필요 없다고 판단되면 needs_info를 유지한 채 두거나 blocked/todo로 정리 가능."
+    },
+    {
+      "id": "T-058",
+      "title": "[데모] ClaudeBridge AskUserQuestion 시연용 가상 작업",
+      "category": "infra",
+      "source_section": "데모",
+      "status": "needs_info",
+      "note": "ClaudeBridge 시연용 가상 작업 — 실제 기능 아님. '대기 질문·권한' 탭은 needs_info 상태만 노출한다는 점을 반영해 doing에서 정정. 지금 실제 AskUserQuestion을 호출해 blocked_events에 기록되도록 함."
     }
   ]
 }
