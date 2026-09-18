@@ -646,11 +646,11 @@
     },
     {
       "id": "T-058",
-      "title": "[데모] ClaudeBridge AskUserQuestion 시연용 가상 작업",
+      "title": "[데모] ClaudeBridge 대기 질문 시연용 가상 작업",
       "category": "infra",
       "source_section": "데모",
       "status": "needs_info",
-      "note": "ClaudeBridge 시연용 가상 작업 — 실제 기능 아님. '대기 질문·권한' 탭은 needs_info 상태만 노출한다는 점을 반영해 doing에서 정정. 지금 실제 AskUserQuestion을 호출해 blocked_events에 기록되도록 함."
+      "note": "ClaudeBridge 시연용 가상 작업 — 실제 기능 아님."
     }
   ]
 }

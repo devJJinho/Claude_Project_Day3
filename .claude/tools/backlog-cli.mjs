@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { hashOf, validateBacklog } from "./backlog-schema.mjs";
 import { cmdList, cmdShow, cmdReady } from "./backlog-queries.mjs";
-import { cmdAdd, cmdSetStatus, cmdSetDeps, cmdInit } from "./backlog-mutations.mjs";
+import { cmdAdd, cmdSetStatus, cmdSetDeps, cmdInit, cmdRemove } from "./backlog-mutations.mjs";
 import { CliError } from "./backlog-errors.mjs";
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -72,6 +72,7 @@ function usage() {
     '  add --title "<t>" --category <c> --source-section <s> [--status <s>] [--deps id,id] [--parent id] [--note "<n>"] [--id T-0NN]',
     '  set-status <id> <새 상태> [--evidence "<완료 근거>"] [--note "<메모>"] [--if-hash <hash>]',
     '  set-deps <id> --deps id1,id2 (없애려면 --deps "") [--if-hash <hash>]',
+    "  remove <id>                                    (다른 태스크가 참조 중이면 거부)",
     "",
     "공통: --file <path>  (기본: 프로젝트의 backlog.json)",
   ].join("\n");
@@ -111,6 +112,8 @@ function main() {
       return cmdSetStatus(args, ctx, filePath);
     case "set-deps":
       return cmdSetDeps(args, ctx, filePath);
+    case "remove":
+      return cmdRemove(args, ctx, filePath);
     default:
       throw new CliError(`알 수 없는 명령입니다: '${command}'\n\n` + usage());
   }

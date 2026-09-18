@@ -262,3 +262,36 @@ export function cmdSetDeps(args, ctx, filePath) {
   console.log(`deps 변경 완료: ${id} [${oldDeps.join(",")}] -> [${newDeps.join(",")}]`);
   console.log(JSON.stringify(updatedTask, null, 2));
 }
+
+/**
+ * 태스크를 완전히 삭제한다(잘못 만든 데모/중복 태스크 정리용 — 정상 작업 취소는 set-status로
+ * blocked/needs_info를 쓴다). 다른 태스크가 deps/parent로 참조 중이면 참조 무결성이 깨지므로
+ * 거부한다 — 먼저 그 태스크들의 set-deps를 정리한 뒤 다시 시도해야 한다.
+ */
+export function cmdRemove(args, ctx, filePath) {
+  const id = args._[0];
+  if (!id) throw new CliError("remove <id> 형태로 지정하세요.");
+
+  const task = findTask(ctx.data, id);
+
+  const referencing = ctx.data.tasks.filter(
+    (t) => t.id !== id && ((t.deps ?? []).includes(id) || t.parent === id)
+  );
+  if (referencing.length > 0) {
+    throw new CliError(
+      `'${id}'를 다른 태스크가 참조 중이라 삭제할 수 없습니다: ${referencing.map((t) => t.id).join(", ")}. ` +
+        `먼저 그 태스크들의 deps/parent를 정리하세요.`
+    );
+  }
+
+  const newTasks = ctx.data.tasks.filter((t) => t.id !== id);
+  const newData = { ...ctx.data, tasks: newTasks };
+  const errors = validateBacklog(newData);
+  if (errors.length > 0) {
+    throw new CliError(`삭제 결과가 스키마를 위반합니다:\n- ` + errors.join("\n- "));
+  }
+
+  commitWrite(filePath, ctx, newData, args["if-hash"]);
+  console.log(`삭제 완료: ${id}`);
+  console.log(JSON.stringify(task, null, 2));
+}
